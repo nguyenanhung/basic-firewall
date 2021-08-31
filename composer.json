@@ -1,0 +1,31 @@
+{
+    "name": "nguyenanhung/basic-firewall",
+    "description": "PHP Basic Firewall",
+    "keywords": [
+        "firewall",
+        "php"
+    ],
+    "homepage": "https://github.com/nguyenanhung/basic-firewall",
+    "license": "GPL-3.0",
+    "minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "Nguyen An Hung",
+            "email": "dev@nguyenanhung.com",
+            "homepage": "https://nguyenanhung.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^5.4 || ^7.0 || ^8.0",
+        "ext-pdo": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "nguyenanhung\\PhpBasicFirewall\\": "src/"
+        },
+        "files": [
+            "helpers/helpers.php"
+        ]
+    }
+}
