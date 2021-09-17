@@ -7,7 +7,7 @@
  * Date: 09/01/2021
  * Time: 00:55
  */
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 use nguyenanhung\PhpBasicFirewall\CheckSystem;
 

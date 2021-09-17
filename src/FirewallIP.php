@@ -8,33 +8,32 @@
 
 namespace nguyenanhung\PhpBasicFirewall;
 
+use M6Web\Component\Firewall\Firewall;
+
 /**
- * Class FilterIPAccessMyWebService
+ * Class FirewallIP - Hàm hỗ trợ filter IP được phép truy cập vào hệ thống
  *
- * Hàm hỗ trợ filter IP được phép truy cập vào hệ thống
+ * @package   nguyenanhung\PhpBasicFirewall
+ * @author    713uk13m <dev@nguyenanhung.com>
+ * @copyright 713uk13m <dev@nguyenanhung.com>
  */
-class FilterIPAccessMyWebService
+class FirewallIP
 {
     /** @var string $logDestination */
     protected $logDestination;
 
-    // Cấu hình những IP nào được phép gọi vào hệ thống
-    protected $ipWhiteList = array(
-        '127.0.0.1'
-    );
+    /**
+     * @var array Cấu hình các IP được phép truy cập vào hệ thống
+     */
+    protected $ipWhiteList = array('127.0.0.1');
 
     /**
-     * Function getLogDestination
-     *
-     * @return string
-     * @author   : 713uk13m <dev@nguyenanhung.com>
-     * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 09/17/2021 55:50
+     * @var array Cấu hình các IP không được phép truy cập vào hệ thống
      */
-    public function getLogDestination()
-    {
-        return $this->logDestination;
-    }
+    protected $ipBlacklist = array();
+
+    /** @var bool Access Roles */
+    protected $access = false;
 
     /**
      * Function setLogDestination
@@ -54,24 +53,6 @@ class FilterIPAccessMyWebService
     }
 
     /**
-     * Function writeErrorLog
-     *
-     * @param string $message
-     *
-     * @author   : 713uk13m <dev@nguyenanhung.com>
-     * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 09/01/2021 53:24
-     */
-    public function writeErrorLog($message = '')
-    {
-        if (!empty($this->logDestination)) {
-            @error_log($message . PHP_EOL, 3, $this->logDestination);
-        } else {
-            @error_log($message . PHP_EOL, 3);
-        }
-    }
-
-    /**
      * Function setIpWhiteList
      *
      * @param array $ipWhiteList
@@ -79,9 +60,9 @@ class FilterIPAccessMyWebService
      * @return $this
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 09/01/2021 48:10
+     * @time     : 09/18/2021 29:42
      */
-    public function setIpWhiteList($ipWhiteList = [])
+    public function setIpWhiteList($ipWhiteList = array())
     {
         $this->ipWhiteList = $ipWhiteList;
 
@@ -89,44 +70,20 @@ class FilterIPAccessMyWebService
     }
 
     /**
-     * Function getIpWhiteList
+     * Function setIpBlackList
      *
-     * @return string[]
+     * @param array $ipBlacklist
+     *
+     * @return $this
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 09/01/2021 48:20
+     * @time     : 09/18/2021 29:46
      */
-    public function getIpWhiteList()
+    public function setIpBlackList($ipBlacklist = array())
     {
-        return $this->ipWhiteList;
-    }
+        $this->ipBlacklist = $ipBlacklist;
 
-    /**
-     * Function checkUserConnect
-     *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 2019-01-10 16:22
-     *
-     * @return bool
-     */
-    public function checkUserConnect()
-    {
-        $ips = $this->getIPAddress();
-        if (empty($ips)) {
-            return false;
-        }
-
-        if (defined('HUNGNG_IP_WHITELIST')) {
-            if (in_array($ips, HUNGNG_IP_WHITELIST)) {
-                return true;
-            }
-        }
-
-        if (in_array($ips, $this->ipWhiteList)) {
-            return true;
-        }
-
-        return false;
+        return $this;
     }
 
     /**
@@ -217,5 +174,81 @@ class FilterIPAccessMyWebService
     {
         return 'Access Denied!';
     }
+
+    /**
+     * Function accessDeniedResponse
+     *
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 09/18/2021 41:56
+     */
+    public function accessDeniedResponse()
+    {
+        http_response_code(403);
+        exit($this->accessDenied());
+    }
+
+    /**
+     * Function writeErrorLog
+     *
+     * @param string $message
+     *
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 09/01/2021 53:24
+     */
+    public function writeErrorLog($message = '')
+    {
+        if (!empty($this->logDestination)) {
+            @error_log($message . PHP_EOL, 3, $this->logDestination);
+        } else {
+            @error_log($message . PHP_EOL, 3);
+        }
+    }
+
+    /**
+     * Function checkUserConnect
+     *
+     * @param bool $defaultState
+     *
+     * @return $this
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 09/18/2021 59:34
+     */
+    public function checkUserConnect($defaultState = false)
+    {
+        $firewall = new Firewall();
+        $firewall->setDefaultState($defaultState);
+        if (defined('HUNGNG_IP_WHITELIST') && is_array(HUNGNG_IP_WHITELIST)) {
+            $firewall->addList(HUNGNG_IP_WHITELIST, 'local', true);
+        } else {
+            $firewall->addList($this->ipWhiteList, 'local', true);
+        }
+        if (defined('HUNGNG_IP_BLACKLIST') && is_array(HUNGNG_IP_BLACKLIST)) {
+            $firewall->addList(HUNGNG_IP_BLACKLIST, 'localBad', false);
+        } else {
+            if (!empty($this->ipBlacklist)) {
+                $firewall->addList($this->ipBlacklist, 'localBad', false);
+            }
+        }
+        $this->access = $firewall->setIpAddress($this->getIPAddress())->handle();
+
+        return $this;
+    }
+
+    /**
+     * Function isAccess
+     *
+     * @return bool
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 09/18/2021 41:24
+     */
+    public function isAccess()
+    {
+        return $this->access;
+    }
+
 }
 
