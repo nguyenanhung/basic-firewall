@@ -60,14 +60,10 @@ class CheckSystem
 
         $message = 'Phiên bản PHP hiện tại là: ' . PHP_VERSION . ' - phiên bản khuyến nghị ' . $operator . ' ' . $minVersion;
 
-        if (version_compare(PHP_VERSION, $minVersion, $operator)) {
-            $status = 'HỢP LỆ';
-        } else {
-            $status = 'KO HỢP LỆ';
-        }
-        $result = $message . ' => ' . $status . PHP_EOL;
+        $status = version_compare(PHP_VERSION, $minVersion, $operator) ? 'HỢP LỆ' : 'KO HỢP LỆ';
+        $result = $message . ' => ' . $status;
 
-        echo $result;
+        Output::writeLn($result);
     }
 
     /**
@@ -85,13 +81,10 @@ class CheckSystem
         try {
             $socket  = fsockopen($hostname, $port);
             $message = 'Kết nối đến server ' . $hostname . ':' . $port . '';
-            if ($socket) {
-                $status = 'THÀNH CÔNG';
-            } else {
-                $status = 'THẤT BẠI';
-            }
-            $result = $message . ' => ' . $status . PHP_EOL;
-            echo $result;
+            $status  = $socket ? 'THÀNH CÔNG' : 'THẤT BẠI';
+            $result  = $message . ' => ' . $status;
+
+            Output::writeLn($result);
         } catch (Exception $exception) {
             echo $exception->getMessage();
         }
@@ -109,14 +102,10 @@ class CheckSystem
     public function checkExtension($extension = '')
     {
         $message = 'Tiện ích yêu cầu -> ' . $extension;
-        if (extension_loaded($extension)) {
-            $status = 'ĐƯỢC CÀI ĐẶT';
-        } else {
-            $status = 'CHƯA ĐƯỢC CÀI ĐẶT';
-        }
-        $result = $message . ' => ' . $status . PHP_EOL;
+        $status  = extension_loaded($extension) ? 'ĐƯỢC CÀI ĐẶT' : 'CHƯA ĐƯỢC CÀI ĐẶT';
+        $result  = $message . ' => ' . $status;
 
-        echo $result;
+        Output::writeLn($result);
     }
 
     /**
@@ -131,13 +120,10 @@ class CheckSystem
     public function checkWriteFile($filename = '')
     {
         $message = 'File ' . $filename;
-        if (is_writable($filename)) {
-            $status = 'ĐƯỢC CẤP QUYỀN GHI';
-        } else {
-            $status = 'KHÔNG ĐƯỢC CẤP QUYỀN GHI';
-        }
-        $result = $message . ' => ' . $status . PHP_EOL;
-        echo $result;
+        $status  = is_writable($filename) ? 'ĐƯỢC CẤP QUYỀN GHI' : 'KHÔNG ĐƯỢC CẤP QUYỀN GHI';
+        $result  = $message . ' => ' . $status;
+
+        Output::writeLn($result);
     }
 
     /**
@@ -152,13 +138,10 @@ class CheckSystem
     public function checkReadFile($filename = '')
     {
         $message = 'File ' . $filename;
-        if (is_readable($filename)) {
-            $status = 'ĐƯỢC CẤP QUYỀN ĐỌC';
-        } else {
-            $status = 'KHÔNG ĐƯỢC CẤP QUYỀN ĐỌC';
-        }
-        $result = $message . ' => ' . $status . PHP_EOL;
-        echo $result;
+        $status  = is_readable($filename) ? 'ĐƯỢC CẤP QUYỀN ĐỌC' : 'KHÔNG ĐƯỢC CẤP QUYỀN ĐỌC';
+        $result  = $message . ' => ' . $status;
+
+        Output::writeLn($result);
     }
 
     /**
@@ -173,13 +156,10 @@ class CheckSystem
     public function checkExecutableFile($filename = '')
     {
         $message = 'File ' . $filename . '';
-        if (is_executable($filename)) {
-            $status = 'ĐƯỢC CẤP QUYỀN THỰC THI';
-        } else {
-            $status = 'KHÔNG ĐƯỢC CẤP QUYỀN THỰC THI';
-        }
-        $result = $message . ' => ' . $status . PHP_EOL;
-        echo $result;
+        $status  = is_executable($filename) ? 'ĐƯỢC CẤP QUYỀN THỰC THI' : 'KHÔNG ĐƯỢC CẤP QUYỀN THỰC THI';
+        $result  = $message . ' => ' . $status;
+
+        Output::writeLn($result);
     }
 
     /**
@@ -202,11 +182,11 @@ class CheckSystem
             $conn      = new PDO($dsnString, $username, $password);
             // set the PDO error mode to exception
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            echo "Connected successfully to Database : " . $dsnString . " with username: " . $username . " and password: " . $password . PHP_EOL;
+            Output::writeLn("Connected successfully to Database : " . $dsnString . " with username: " . $username . " and password: " . $password);
             $conn = null;
         } catch (PDOException $e) {
-            echo "Connection failed: " . $e->getMessage() . PHP_EOL;
-            echo $e->getTraceAsString() . PHP_EOL;
+            Output::writeLn("Connection failed: " . $e->getMessage());
+            Output::writeLn($e->getTraceAsString());
         }
     }
 }

@@ -15,19 +15,21 @@ namespace nguyenanhung\PhpBasicFirewall;
  */
 class FilterIPAccessMyWebService
 {
+    /** @var string $logDestination */
     protected $logDestination;
+
     // Cấu hình những IP nào được phép gọi vào hệ thống
-    protected $ipWhiteList = [
+    protected $ipWhiteList = array(
         '127.0.0.1'
-    ];
+    );
 
     /**
      * Function getLogDestination
      *
-     * @return mixed
+     * @return string
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 09/01/2021 50:26
+     * @time     : 09/17/2021 55:50
      */
     public function getLogDestination()
     {
@@ -113,6 +115,13 @@ class FilterIPAccessMyWebService
         if (empty($ips)) {
             return false;
         }
+
+        if (defined('HUNGNG_IP_WHITELIST')) {
+            if (in_array($ips, HUNGNG_IP_WHITELIST)) {
+                return true;
+            }
+        }
+
         if (in_array($ips, $this->ipWhiteList)) {
             return true;
         }
@@ -133,15 +142,16 @@ class FilterIPAccessMyWebService
     public function getIPAddress($convertToInteger = false)
     {
         $ip_keys = array(
-            0 => 'HTTP_X_FORWARDED_FOR',
-            1 => 'HTTP_X_FORWARDED',
-            2 => 'HTTP_X_IPADDRESS',
-            3 => 'HTTP_X_CLUSTER_CLIENT_IP',
-            4 => 'HTTP_FORWARDED_FOR',
-            5 => 'HTTP_FORWARDED',
-            6 => 'HTTP_CLIENT_IP',
-            7 => 'HTTP_IP',
-            8 => 'REMOTE_ADDR'
+            0 => 'HTTP_CF_CONNECTING_IP',
+            1 => 'HTTP_X_FORWARDED_FOR',
+            2 => 'HTTP_X_FORWARDED',
+            3 => 'HTTP_X_IPADDRESS',
+            4 => 'HTTP_X_CLUSTER_CLIENT_IP',
+            5 => 'HTTP_FORWARDED_FOR',
+            6 => 'HTTP_FORWARDED',
+            7 => 'HTTP_CLIENT_IP',
+            8 => 'HTTP_IP',
+            9 => 'REMOTE_ADDR'
         );
         foreach ($ip_keys as $key) {
             if (array_key_exists($key, $_SERVER) === true) {
@@ -169,7 +179,30 @@ class FilterIPAccessMyWebService
      */
     public function errorLogMessage()
     {
-        return date('Y-m-d H:i:s') . ' -> IP: ' . $this->getIPAddress() . ' -> is not Whitelist IP access to Service';
+        $message = date('Y-m-d H:i:s') . ' | Access Denied -> IP: ' . $this->getIPAddress();
+        if (isset($_SERVER['HTTP_CF_IPCOUNTRY'])) {
+            $message .= " - COUNTRY: " . $_SERVER['HTTP_CF_IPCOUNTRY'];
+        }
+        if (isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
+            $message .= " - PROTOCOL: " . $_SERVER['HTTP_X_FORWARDED_PROTO'];
+        }
+        if (isset($_SERVER['REQUEST_METHOD'])) {
+            $message .= " - METHOD: " . $_SERVER['REQUEST_METHOD'];
+        }
+        if (isset($_SERVER['HTTP_HOST'])) {
+            $message .= " - HOST: " . $_SERVER['HTTP_HOST'];
+        }
+        if (isset($_SERVER['REQUEST_URI'])) {
+            $message .= " - URI: " . $_SERVER['REQUEST_URI'];
+        }
+        if (isset($_SERVER['QUERY_STRING'])) {
+            $message .= " - QUERY_STRING: " . $_SERVER['QUERY_STRING'];
+        }
+        if (isset($_SERVER['HTTP_USER_AGENT'])) {
+            $message .= " - USER_AGENT: " . $_SERVER['HTTP_USER_AGENT'];
+        }
+
+        return $message;
     }
 
     /**
