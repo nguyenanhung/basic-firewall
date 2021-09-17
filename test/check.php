@@ -32,4 +32,4 @@ $system->phpTelnet('127.0.0.1', 3306);
 $system->phpTelnet('127.0.0.1', 2842);
 
 // Kiểm tra kết nối CSDL
-$system->checkConnectDatabase('127.0.0.1', 3306, 'test_data', 'root', 'hungna');
+$system->checkConnectDatabase('mariadb', 3306, 'my_data', 'root', 'hungna');
