@@ -20,3 +20,43 @@ if (!function_exists('register_error_handler')) {
         }
     }
 }
+if (!function_exists('php_basic_firewall')) {
+    /**
+     * Function php_basic_firewall
+     *
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 09/18/2021 16:59
+     */
+    function php_basic_firewall()
+    {
+        $firewall = new nguyenanhung\PhpBasicFirewall\FirewallIP();
+        $firewall->checkUserConnect(false);
+        if (true !== $firewall->isAccess()) {
+            $firewall->accessDeniedResponse();
+        }
+
+    }
+}
+if (!function_exists('php_basic_firewall_save_log')) {
+    /**
+     * Function php_basic_firewall_save_log
+     *
+     * @param string $logFile
+     *
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 09/18/2021 17:22
+     */
+    function php_basic_firewall_save_log($logFile = '')
+    {
+        $firewall = new nguyenanhung\PhpBasicFirewall\FirewallIP();
+        $firewall->setLogDestination($logFile)
+                 ->checkUserConnect(false);
+        if (true !== $firewall->isAccess()) {
+            $firewall->writeErrorLog($firewall->errorLogMessage());
+            $firewall->accessDeniedResponse();
+        }
+
+    }
+}
