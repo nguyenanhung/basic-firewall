@@ -14,7 +14,7 @@ Cài đặt gói Basic Firewall thông qua composer với lệnh như sau
 composer require nguyenanhung/basic-firewall
 ```
 
-### Hướng dẫn tích hợp
+### Hướng dẫn tích hợp Firewall
 
 Tham khảo cách tích hợp thông qua hướng dẫn tại đoạn code ví dụ dưới đây
 
@@ -68,6 +68,8 @@ if (true !== $firewall->isAccess()) {
 }
 
 // ==================================== End Firewall
+
+// Pass qua firewall sẽ là các đoạn code thực hiện nghiệp vụ của bạn
 ```
 
 Trong ví dụ trên, chỉ những IP bắt đầu bằng *192.168.0* (loại trừ *192.168.0.50*) và *127.0.0.1* sẽ được cho phép truy cập bởi Firewall. Tất cả các IP khác  `handle()` sẽ return `false`
@@ -82,12 +84,12 @@ Firewall hỗ trợ input các IP whitelist và blacklist như sau
 
 Type | Syntax | Details
 --- | --- | ---
-IPV6|`::1`|Short notation
+IPV6|`::1`|Hỗ trợ các viết tắt
 IPV4|`192.168.0.1`|
-Range|`192.168.0.0-192.168.1.60`|Includes all IPs from *192.168.0.0* to *192.168.0.255*<br />and from *192.168.1.0* to *198.168.1.60*
-Wild card|`192.168.0.*`|IPs starting with *192.168.0*<br />Same as IP Range `192.168.0.0-192.168.0.255`
-Subnet mask|`192.168.0.0/255.255.255.0`|IPs starting with *192.168.0*<br />Same as `192.168.0.0-192.168.0.255` and `192.168.0.*`
-CIDR Mask|`192.168.0.0/24`|IPs starting with *192.168.0*<br />Same as `192.168.0.0-192.168.0.255` and `192.168.0.*`<br />and `192.168.0.0/255.255.255.0`
+Range|`192.168.0.0-192.168.1.60`|Bao gồm tất cả các IP từ *192.168.0.0* đến *192.168.0.255*<br />và từ *192.168.1.0* đến *198.168.1.60*
+Wild card|`192.168.0.*`|Tất cả IP bắt đầu bằng *192.168.0*<br />Nó tương tự với cách khai báo `192.168.0.0-192.168.0.255`
+Subnet mask|`192.168.0.0/255.255.255.0`|Tất cả IP bắt đầu bằng *192.168.0*<br />Nó tương tự với cách khai báo `192.168.0.0-192.168.0.255` <br />và `192.168.0.*`
+CIDR Mask|`192.168.0.0/24`|Tất cả IP bắt đầu bằng *192.168.0*<br />Nó tương tự với cách khai báo `192.168.0.0-192.168.0.255` <br /> và `192.168.0.*` cũng như `192.168.0.0/255.255.255.0`
 
 ## LICENSE
 
