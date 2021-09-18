@@ -35,6 +35,26 @@ class FirewallIP
     /** @var bool Access Roles */
     protected $access = false;
 
+    /** @var bool Bypass if Use CLI */
+    protected $cliBypass = false;
+
+    /**
+     * Function setCliBypass
+     *
+     * @param false $cliBypass
+     *
+     * @return $this
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 09/18/2021 09:28
+     */
+    public function setCliBypass($cliBypass = false)
+    {
+        $this->cliBypass = $cliBypass;
+
+        return $this;
+    }
+
     /**
      * Function setLogDestination
      *
@@ -233,6 +253,8 @@ class FirewallIP
             }
         }
         $this->access = $firewall->setIpAddress($this->getIPAddress())->handle();
+
+        // Nếu chạy từ CLI -> bypass
 
         return $this;
     }
