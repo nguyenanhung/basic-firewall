@@ -31,4 +31,4 @@ $system->checkExtension('bcmath');
 $system->phpTelnet('github.com', 80);
 
 // Kiểm tra kết nối CSDL
-$system->checkConnectDatabase('127.0.0.1', 3306, 'my_data', 'root', 'hungna');
+// $system->checkConnectDatabase('127.0.0.1', 3306, 'my_data', 'root', 'hungna');
