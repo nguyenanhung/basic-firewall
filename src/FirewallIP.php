@@ -56,6 +56,32 @@ class FirewallIP
     }
 
     /**
+     * Function isCliBypass
+     *
+     * @return bool
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 09/18/2021 13:47
+     */
+    public function isCliBypass()
+    {
+        return $this->cliBypass;
+    }
+
+    /**
+     * Function isCLI
+     *
+     * @return bool
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 09/18/2021 14:09
+     */
+    public function isCLI()
+    {
+        return CheckSystem::isCLI();
+    }
+
+    /**
      * Function setLogDestination
      *
      * @param string $logDestination

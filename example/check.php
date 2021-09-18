@@ -9,12 +9,20 @@
  */
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use nguyenanhung\PhpBasicFirewall\Output;
 use nguyenanhung\PhpBasicFirewall\CheckSystem;
 
 $system = new CheckSystem();
 
 // Kiểm tra phiên bản PHP
 $system->phpVersion();
+
+// Kiểm tra xem có phải đang sử dụng CLI hay không
+$isCli = $system::isCLI();
+if (true === $isCli) {
+    Output::writeLn('Current use Command Line Interface');
+}
+
 
 // Kiểm tra các extension cần thiết
 $system->checkExtension('curl');

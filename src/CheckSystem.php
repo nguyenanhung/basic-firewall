@@ -21,7 +21,7 @@ class CheckSystem
      *
      * @return    bool
      */
-    public function isCLI()
+    public static function isCLI()
     {
         return (PHP_SAPI === 'cli' or defined('STDIN'));
     }
