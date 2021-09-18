@@ -125,7 +125,7 @@ class CheckSystem
      */
     public function connectUsePhpTelnet($hostname = '', $port = '')
     {
-        $message = 'Connection to serer ' . $hostname . ':' . $port . '';
+        $message = 'Connection to server ' . $hostname . ':' . $port . '';
         try {
             $socket = fsockopen($hostname, $port);
             if ($socket) {
