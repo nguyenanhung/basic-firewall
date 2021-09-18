@@ -76,7 +76,7 @@ if (true !== $firewall->isAccess()) {
 // Pass qua firewall sẽ là các đoạn code thực hiện nghiệp vụ của bạn
 ```
 
-Trong ví dụ trên, chỉ những IP bắt đầu bằng *192.168.0* (loại trừ *192.168.0.50*) và *127.0.0.1* sẽ được cho phép truy cập bởi Firewall. Tất cả các IP khác  `handle()` sẽ return `false`
+Trong ví dụ trên, chỉ những IP bắt đầu bằng *192.168.0* (loại trừ *192.168.0.50*) và *127.0.0.1* sẽ được cho phép truy cập bởi Firewall. Tất cả các IP khác, firewall sẽ return `false`
 
 * `checkUserConnect(false)` khai báo `true` hoặc `false` để xác định mặc định firewall cho phép hay từ chối truy cập (Optional - Default `false`). `true` nếu mặc định cho phép truy cập, `false` nếu mặc định từ chối
 * `setIpWhiteList($whiteList)` khai báo `$whiteList` IP list cho phép truy cập
@@ -90,10 +90,53 @@ Type | Syntax | Details
 --- | --- | ---
 IPV6|`::1`|Hỗ trợ các viết tắt
 IPV4|`192.168.0.1`|
-Range|`192.168.0.0-192.168.1.60`|Bao gồm tất cả các IP từ *192.168.0.0* đến *192.168.0.255*<br />và từ *192.168.1.0* đến *198.168.1.60*
-Wild card|`192.168.0.*`|Tất cả IP bắt đầu bằng *192.168.0*<br />Nó tương tự với cách khai báo `192.168.0.0-192.168.0.255`
-Subnet mask|`192.168.0.0/255.255.255.0`|Tất cả IP bắt đầu bằng *192.168.0*<br />Nó tương tự với cách khai báo `192.168.0.0-192.168.0.255` <br />và `192.168.0.*`
-CIDR Mask|`192.168.0.0/24`|Tất cả IP bắt đầu bằng *192.168.0*<br />Nó tương tự với cách khai báo `192.168.0.0-192.168.0.255` <br /> và `192.168.0.*` cũng như `192.168.0.0/255.255.255.0`
+Range|`192.168.0.0-192.168.1.60`|Bao gồm tất cả các IP từ `192.168.0.0` đến `192.168.0.255`<br />và từ `192.168.1.0` đến `198.168.1.60`
+Wild card|`192.168.0.*`|Tất cả IP bắt đầu bằng `192.168.0`<br />Nó tương tự với cách khai báo `192.168.0.0-192.168.0.255`
+Subnet mask|`192.168.0.0/255.255.255.0`|Tất cả IP bắt đầu bằng `192.168.0`<br />Nó tương tự với cách khai báo `192.168.0.0-192.168.0.255` <br />và `192.168.0.*`
+CIDR Mask|`192.168.0.0/24`|Tất cả IP bắt đầu bằng `192.168.0`<br />Nó tương tự với cách khai báo `192.168.0.0-192.168.0.255` <br /> và `192.168.0.*` cũng như `192.168.0.0/255.255.255.0`
+
+### Hướng dẫn tích hợp hàm tiện ích Check System
+
+Gói này cung cấp thêm 1 lớp tiện ích, dùng kiểm tra mạng, extension hoặc kiểm tra kết nối tới MySQL Database. Tham khảo cách sử dụng dưới đây
+
+```php
+<?php
+/**
+ * Project basic-firewall
+ * Created by PhpStorm
+ * User: 713uk13m <dev@nguyenanhung.com>
+ * Copyright: 713uk13m <dev@nguyenanhung.com>
+ * Date: 09/01/2021
+ * Time: 00:55
+ */
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use nguyenanhung\PhpBasicFirewall\CheckSystem;
+
+$system = new CheckSystem();
+
+// Kiểm tra phiên bản PHP
+$system->phpVersion();
+
+// Kiểm tra các extension cần thiết
+$system->checkExtension('curl');
+$system->checkExtension('pdo');
+$system->checkExtension('mysqli');
+$system->checkExtension('gd');
+$system->checkExtension('mbstring');
+$system->checkExtension('json');
+$system->checkExtension('session');
+$system->checkExtension('sockets');
+$system->checkExtension('bcmath');
+
+// Kiểm tra kết nối tới 1 server nào đó
+$system->phpTelnet('127.0.0.1', 3306);
+$system->phpTelnet('127.0.0.1', 2842);
+
+// Kiểm tra kết nối CSDL
+$system->checkConnectDatabase('127.0.0.1', '3306', 'my_data', 'root', 'hungna');
+
+```
 
 ## LICENSE
 

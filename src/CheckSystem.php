@@ -296,11 +296,11 @@ class CheckSystem
     /**
      * Function checkConnectDatabaseWithPDO
      *
-     * @param string $host
-     * @param string $port
-     * @param string $database
-     * @param string $username
-     * @param string $password
+     * @param string     $host
+     * @param string|int $port
+     * @param string     $database
+     * @param string     $username
+     * @param string     $password
      *
      * @return array
      * @author   : 713uk13m <dev@nguyenanhung.com>
@@ -333,11 +333,11 @@ class CheckSystem
     /**
      * Function checkConnectDatabase
      *
-     * @param string $host
-     * @param string $port
-     * @param string $database
-     * @param string $username
-     * @param string $password
+     * @param string     $host
+     * @param string|int $port
+     * @param string     $database
+     * @param string     $username
+     * @param string     $password
      *
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
