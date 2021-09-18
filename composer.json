@@ -30,7 +30,7 @@
         ]
     },
     "suggest": {
-        "ext-pdo": "For Check Database Connection"
-        "ext-pdo_mysql": "For Check Database Connection"
+        "ext-pdo": "For Check Database Connection",
+        "ext-pdo_mysql": "For Check Database Connection with MySQL"
     }
 }
