@@ -2,7 +2,11 @@
 
 # PHP Basic Firewall
 
-Thư viện `PHP Basic Firewall` được xây dựng bằng PHP cung cấp 1 phương thức đơn giản để hạn chế quyền truy cập website / api / webservice dựa vào địa chỉ `IP` truy cập của người dùng
+Thư viện `PHP Basic Firewall` được xây dựng bằng PHP cung cấp 1 phương thức đơn giản để hạn chế quyền truy cập website / api / webservice dựa vào địa chỉ `IP` truy cập của người dùng.
+
+Thông thường Firewall tốt nhất nên được thiết đặt từ tầng hệ thống: hệ điều hành có cài tường lửa như `iptables`, `firewalld` hay `CSF`.
+
+Tuy nhiên, trong 1 số trường hợp DEV không có quyền can thiệp hệ thống hoặc không nắm chắc. Hoặc giả như muốn chủ động trong các tình huống thì có thể tích hợp gói `PHP Basic Firewall` này vào để thực hiện từ tầng Application.
 
 ## Hướng dẫn sử dụng
 
@@ -95,7 +99,7 @@ CIDR Mask|`192.168.0.0/24`|Tất cả IP bắt đầu bằng *192.168.0*<br />N�
 
 Gói được phân phối bởi giấy phép ![License](http://poser.pugx.org/nguyenanhung/basic-firewall/license), tham khảo chi tiết giấy phép [tại đây](https://github.com/nguyenanhung/basic-firewall/blob/main/LICENSE)
 
-Gói có sử dụng packages `m6web/firewall` được cung cấp bởi `M6Web`, bạn cũng có thể sử dụng riêng packages này theo đường link [tại đây](https://packagist.org/packages/m6web/firewall)
+Gói có sử dụng packages `m6web/firewall` được cung cấp bởi `M6Web`, bạn cũng có thể sử dụng riêng gói này theo đường link [tại đây](https://packagist.org/packages/m6web/firewall)
 
 ## Hỗ trợ
 
