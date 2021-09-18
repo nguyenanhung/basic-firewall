@@ -24,14 +24,16 @@ if (!function_exists('php_basic_firewall')) {
     /**
      * Function php_basic_firewall
      *
+     * @param bool $defaultState
+     *
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 09/18/2021 16:59
+     * @time     : 09/18/2021 00:10
      */
-    function php_basic_firewall()
+    function php_basic_firewall($defaultState = false)
     {
         $firewall = new nguyenanhung\PhpBasicFirewall\FirewallIP();
-        $firewall->checkUserConnect(false);
+        $firewall->checkUserConnect($defaultState);
         if (true !== $firewall->isAccess()) {
             $firewall->accessDeniedResponse();
         }
@@ -43,16 +45,17 @@ if (!function_exists('php_basic_firewall_save_log')) {
      * Function php_basic_firewall_save_log
      *
      * @param string $logFile
+     * @param bool   $defaultState
      *
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/18/2021 17:22
      */
-    function php_basic_firewall_save_log($logFile = '')
+    function php_basic_firewall_save_log($logFile = '', $defaultState = false)
     {
         $firewall = new nguyenanhung\PhpBasicFirewall\FirewallIP();
         $firewall->setLogDestination($logFile)
-                 ->checkUserConnect(false);
+                 ->checkUserConnect($defaultState);
         if (true !== $firewall->isAccess()) {
             $firewall->writeErrorLog($firewall->errorLogMessage());
             $firewall->accessDeniedResponse();

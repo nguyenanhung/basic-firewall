@@ -28,5 +28,9 @@
         "files": [
             "helpers/helpers.php"
         ]
+    },
+    "suggest": {
+        "ext-pdo": "For Check Database Connection"
+        "ext-pdo_mysql": "For Check Database Connection"
     }
 }
