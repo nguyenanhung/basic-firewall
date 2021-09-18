@@ -26,12 +26,11 @@ $whiteList = array(
 // ==================================== Setup List IP Blacklist
 // Setup constants HUNGNG_IP_BLACKLIST
 defined('HUNGNG_IP_BLACKLIST') or define('HUNGNG_IP_BLACKLIST', array(
-    '127.0.0.1',
-    '192.168.0.*',
+    //'192.168.0.*',
 ));
 // Or Blacklist Array
 $blackList = array(
-    '192.168.0.50',
+    //'192.168.0.50',
 );
 
 // ==================================== Start Firewall

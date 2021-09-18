@@ -32,3 +32,5 @@ jobs:
                 run: composer install --no-progress --prefer-dist --optimize-autoloader
             -   name: Check PHP Extension
                 run: php ./example/check.php
+            -   name: Start PHP Basic Firewall
+                run: php ./example/firewall.php
