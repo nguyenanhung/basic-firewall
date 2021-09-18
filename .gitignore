@@ -121,6 +121,6 @@ GitHub.sublime-settings
 /vendor/
 /tests/*
 
-cache/*
-!cache/.htaccess
-!cache/.gitkeep
+tmp/*
+!tmp/.htaccess
+!tmp/.gitkeep

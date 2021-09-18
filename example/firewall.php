@@ -36,7 +36,7 @@ $blackList = array(
 
 // ==================================== Start Firewall
 $firewall = new FirewallIP();
-$firewall->setLogDestination(__DIR__ . '/../cache/FirewallLog.log')
+$firewall->setLogDestination(__DIR__ . '/../tmp/FirewallLog.log')
          ->setIpWhiteList($whiteList)
          ->setIpBlackList($blackList)
          ->checkUserConnect(false);
