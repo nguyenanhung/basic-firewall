@@ -68,6 +68,7 @@ $firewall->setLogDestination(__DIR__ . '/logs/FirewallLog.log')
          ->checkUserConnect(false);
 
 if (true !== $firewall->isAccess()) {
+    $firewall->writeErrorLog($firewall->errorLogMessage()); // Write log to /tmp/FirewallLog.log
     $firewall->accessDeniedResponse(); // Response 403 http code, Access Denied message
 }
 
