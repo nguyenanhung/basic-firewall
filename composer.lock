@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bc4857eea3c0f1631aa0ad98098aa4c9",
+    "content-hash": "d0bdb4e54cf71498d76e1d085e2120c4",
     "packages": [
         {
             "name": "m6web/firewall",
@@ -65,7 +65,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^5.4 || ^7.0 || ^8.0",
+        "php": "^5.6 || ^7.0 || ^8.0",
         "ext-pdo": "*"
     },
     "platform-dev": [],

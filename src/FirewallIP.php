@@ -268,15 +268,13 @@ class FirewallIP
         $firewall->setDefaultState($defaultState);
         if (defined('HUNGNG_IP_WHITELIST') && is_array(HUNGNG_IP_WHITELIST)) {
             $firewall->addList(HUNGNG_IP_WHITELIST, 'local', true);
-        } else {
+        } elseif (!empty($this->ipWhiteList)) {
             $firewall->addList($this->ipWhiteList, 'local', true);
         }
         if (defined('HUNGNG_IP_BLACKLIST') && is_array(HUNGNG_IP_BLACKLIST)) {
             $firewall->addList(HUNGNG_IP_BLACKLIST, 'localBad', false);
-        } else {
-            if (!empty($this->ipBlacklist)) {
-                $firewall->addList($this->ipBlacklist, 'localBad', false);
-            }
+        } elseif (!empty($this->ipBlacklist)) {
+            $firewall->addList($this->ipBlacklist, 'localBad', false);
         }
         $this->access = $firewall->setIpAddress($this->getIPAddress())->handle();
 
