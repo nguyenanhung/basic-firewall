@@ -120,6 +120,7 @@ GitHub.sublime-settings
 ## Composer
 /vendor/
 /tests/*
+composer.lock
 
 tmp/*
 !tmp/.htaccess
