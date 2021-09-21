@@ -10,6 +10,9 @@
 
 namespace nguyenanhung\PhpBasicFirewall;
 
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
 /**
  * Class Logging - Thực hiện việc ghi và lưu trữ log, phân tích log
  *
@@ -21,5 +24,39 @@ namespace nguyenanhung\PhpBasicFirewall;
  */
 class Logging
 {
+    protected $logPath = '';
 
+    /**
+     * Function setLogPath
+     *
+     * @param $logPath
+     *
+     * @return $this
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 09/21/2021 34:09
+     */
+    public function setLogPath($logPath)
+    {
+        $this->logPath = $logPath;
+
+        return $this;
+    }
+
+    /**
+     * Function write
+     *
+     * @param string $message
+     * @param array  $context
+     *
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 09/21/2021 38:37
+     */
+    public function write($message = '', $context = array())
+    {
+        $log = new Logger('firewall');
+        $log->pushHandler(new StreamHandler($this->logPath . '/basic-firewall.log', Logger::WARNING));
+        $log->error($message, $context);
+    }
 }
