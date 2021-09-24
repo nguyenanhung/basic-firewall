@@ -36,7 +36,7 @@ class Logging
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/21/2021 34:09
      */
-    public function setLogPath($logPath)
+    public function setLogPath($logPath): Logging
     {
         $this->logPath = $logPath;
 
@@ -52,9 +52,9 @@ class Logging
      * @throws \Exception
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 09/24/2021 24:20
+     * @time     : 09/24/2021 22:27
      */
-    public function write($message = '', $context = array())
+    public function write(string $message = '', array $context = array())
     {
         $log = new Logger('firewall');
         $log->pushHandler(new StreamHandler($this->logPath . '/basic-firewall.log', Logger::WARNING));

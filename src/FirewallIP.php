@@ -48,7 +48,7 @@ class FirewallIP
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/18/2021 09:28
      */
-    public function setCliBypass($cliBypass = false)
+    public function setCliBypass(bool $cliBypass = false): FirewallIP
     {
         $this->cliBypass = $cliBypass;
 
@@ -63,7 +63,7 @@ class FirewallIP
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/18/2021 13:47
      */
-    public function isCliBypass()
+    public function isCliBypass(): bool
     {
         return $this->cliBypass;
     }
@@ -76,7 +76,7 @@ class FirewallIP
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/18/2021 14:09
      */
-    public function isCLI()
+    public function isCLI(): bool
     {
         return CheckSystem::isCLI();
     }
@@ -91,7 +91,7 @@ class FirewallIP
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/01/2021 50:21
      */
-    public function setLogDestination($logDestination = '')
+    public function setLogDestination(string $logDestination = ''): FirewallIP
     {
         $this->logDestination = $logDestination;
 
@@ -108,7 +108,7 @@ class FirewallIP
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/18/2021 29:42
      */
-    public function setIpWhiteList($ipWhiteList = array())
+    public function setIpWhiteList(array $ipWhiteList = array()): FirewallIP
     {
         $this->ipWhiteList = $ipWhiteList;
 
@@ -125,7 +125,7 @@ class FirewallIP
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/18/2021 29:46
      */
-    public function setIpBlackList($ipBlacklist = array())
+    public function setIpBlackList(array $ipBlacklist = array()): FirewallIP
     {
         $this->ipBlacklist = $ipBlacklist;
 
@@ -142,9 +142,9 @@ class FirewallIP
      *
      * @return bool|int|string
      */
-    public function getIPAddress($convertToInteger = false)
+    public function getIPAddress(bool $convertToInteger = false)
     {
-        $ip_keys = array(
+        $IPKeys = array(
             0 => 'HTTP_CF_CONNECTING_IP',
             1 => 'HTTP_X_FORWARDED_FOR',
             2 => 'HTTP_X_FORWARDED',
@@ -156,7 +156,7 @@ class FirewallIP
             8 => 'HTTP_IP',
             9 => 'REMOTE_ADDR'
         );
-        foreach ($ip_keys as $key) {
+        foreach ($IPKeys as $key) {
             if (array_key_exists($key, $_SERVER) === true) {
                 foreach (explode(',', $_SERVER[$key]) as $ip) {
                     $ip = trim($ip);
@@ -180,7 +180,7 @@ class FirewallIP
      *
      * @return string
      */
-    public function errorLogMessage()
+    public function errorLogMessage(): string
     {
         $message = date('Y-m-d H:i:s') . ' | Access Denied -> IP: ' . $this->getIPAddress();
         if (isset($_SERVER['HTTP_CF_IPCOUNTRY'])) {
@@ -216,7 +216,7 @@ class FirewallIP
      *
      * @return string
      */
-    public function accessDenied()
+    public function accessDenied(): string
     {
         return 'Access Denied!';
     }
@@ -243,7 +243,7 @@ class FirewallIP
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/01/2021 53:24
      */
-    public function writeErrorLog($message = '')
+    public function writeErrorLog(string $message = '')
     {
         if (!empty($this->logDestination)) {
             @error_log($message . PHP_EOL, 3, $this->logDestination);
@@ -262,7 +262,7 @@ class FirewallIP
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/18/2021 59:34
      */
-    public function checkUserConnect($defaultState = false)
+    public function checkUserConnect(bool $defaultState = false): FirewallIP
     {
         $firewall = new Firewall();
         $firewall->setDefaultState($defaultState);
@@ -291,7 +291,7 @@ class FirewallIP
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/18/2021 41:24
      */
-    public function isAccess()
+    public function isAccess(): bool
     {
         return $this->access;
     }

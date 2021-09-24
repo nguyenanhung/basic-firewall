@@ -21,7 +21,7 @@ class CheckSystem
      *
      * @return    bool
      */
-    public static function isCLI()
+    public static function isCLI(): bool
     {
         return (PHP_SAPI === 'cli' or defined('STDIN'));
     }
@@ -34,7 +34,7 @@ class CheckSystem
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/18/2021 02:29
      */
-    public function getCurrentPhpVersion()
+    public function getCurrentPhpVersion(): string
     {
         return PHP_VERSION;
     }
@@ -47,7 +47,7 @@ class CheckSystem
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/18/2021 01:39
      */
-    public function getPhpMinVersion()
+    public function getPhpMinVersion(): string
     {
         return $this->phpMinVersion;
     }
@@ -62,7 +62,7 @@ class CheckSystem
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/18/2021 01:43
      */
-    public function setPhpMinVersion($phpMinVersion)
+    public function setPhpMinVersion(string $phpMinVersion): CheckSystem
     {
         $this->phpMinVersion = $phpMinVersion;
 
@@ -77,7 +77,7 @@ class CheckSystem
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/18/2021 01:55
      */
-    public function checkPhpVersion()
+    public function checkPhpVersion(): array
     {
         $minVersion = $this->phpMinVersion;
         $operator   = '>=';
@@ -115,15 +115,15 @@ class CheckSystem
     /**
      * Function connectUsePhpTelnet
      *
-     * @param string $hostname
-     * @param string $port
+     * @param string     $hostname
+     * @param string|int $port
      *
      * @return array
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/18/2021 02:43
      */
-    public function connectUsePhpTelnet($hostname = '', $port = '')
+    public function connectUsePhpTelnet(string $hostname = '', $port = ''): array
     {
         $message = 'Connection to server ' . $hostname . ':' . $port . '';
         try {
@@ -152,14 +152,14 @@ class CheckSystem
     /**
      * Function phpTelnet
      *
-     * @param string $hostname
-     * @param string $port
+     * @param string     $hostname
+     * @param string|int $port
      *
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/18/2021 02:47
      */
-    public function phpTelnet($hostname = '', $port = '')
+    public function phpTelnet(string $hostname = '', $port = '')
     {
         $result = $this->connectUsePhpTelnet($hostname, $port);
         Output::writeLn($result['message'] . ' -> ' . $result['status']);
@@ -175,7 +175,7 @@ class CheckSystem
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/18/2021 02:50
      */
-    public function checkExtensionRequirement($extension = '')
+    public function checkExtensionRequirement(string $extension = ''): array
     {
         $message = 'Requirement Extension: ' . $extension;
         $code    = extension_loaded($extension);
@@ -197,7 +197,7 @@ class CheckSystem
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/18/2021 02:54
      */
-    public function checkExtension($extension = '')
+    public function checkExtension(string $extension = '')
     {
         $result = $this->checkExtensionRequirement($extension);
         Output::writeLn($result['message'] . ' -> ' . $result['status']);
@@ -214,7 +214,7 @@ class CheckSystem
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/18/2021 02:59
      */
-    public function checkFilePermission($filename = '', $mode = 'read')
+    public function checkFilePermission(string $filename = '', string $mode = 'read'): array
     {
         $message = 'File ' . $filename;
         if (!file_exists($filename)) {
@@ -257,7 +257,7 @@ class CheckSystem
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/18/2021 03:02
      */
-    public function checkWriteFile($filename = '')
+    public function checkWriteFile(string $filename = '')
     {
         $result = $this->checkFilePermission($filename, 'write');
         Output::writeLn($result['message'] . ' -> ' . $result['status']);
@@ -272,7 +272,7 @@ class CheckSystem
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/18/2021 03:06
      */
-    public function checkReadFile($filename = '')
+    public function checkReadFile(string $filename = '')
     {
         $result = $this->checkFilePermission($filename);
         Output::writeLn($result['message'] . ' -> ' . $result['status']);
@@ -287,7 +287,7 @@ class CheckSystem
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/18/2021 03:09
      */
-    public function checkExecutableFile($filename = '')
+    public function checkExecutableFile(string $filename = '')
     {
         $result = $this->checkFilePermission($filename, 'executable');
         Output::writeLn($result['message'] . ' -> ' . $result['status']);
@@ -307,7 +307,7 @@ class CheckSystem
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/18/2021 03:12
      */
-    public function checkConnectDatabaseWithPDO($host = '', $port = '', $database = '', $username = '', $password = '')
+    public function checkConnectDatabaseWithPDO(string $host = '', $port = '', string $database = '', string $username = '', string $password = ''): array
     {
         try {
             $dsnString = "mysql:host=$host;port=$port;dbname=$database";
@@ -343,7 +343,7 @@ class CheckSystem
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/18/2021 03:16
      */
-    public function checkConnectDatabase($host = '', $port = '', $database = '', $username = '', $password = '')
+    public function checkConnectDatabase(string $host = '', $port = '', string $database = '', string $username = '', string $password = '')
     {
         $result = $this->checkConnectDatabaseWithPDO($host, $port, $database, $username, $password);
         Output::writeLn($result['message']);
