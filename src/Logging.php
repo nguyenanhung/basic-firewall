@@ -49,9 +49,10 @@ class Logging
      * @param string $message
      * @param array  $context
      *
+     * @throws \Exception
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 09/21/2021 38:37
+     * @time     : 09/24/2021 24:20
      */
     public function write($message = '', $context = array())
     {

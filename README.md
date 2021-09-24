@@ -8,6 +8,11 @@ Thông thường Firewall tốt nhất nên được thiết đặt từ tầng 
 
 Tuy nhiên, trong 1 số trường hợp DEV không có quyền can thiệp hệ thống hoặc không nắm chắc. Hoặc giả như muốn chủ động trong các tình huống thì có thể tích hợp gói `PHP Basic Firewall` này vào để thực hiện từ tầng Application.
 
+## Version Support
+
+- [x] V1.x support all PHP version `>=5.4`
+- [x] V2.x support all PHP version `>=7.0`
+
 ## Hướng dẫn sử dụng
 
 ### Cài đặt gói
