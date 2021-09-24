@@ -22,6 +22,8 @@
         "m6web/firewall": ">=1.0"
     },
     "require-dev": {
+        "nguyenanhung/filesystem-helper": "^2.0",
+        "nguyenanhung/nanoid-helper": "^2.0",
         "monolog/monolog": ">=1.26",
         "kint-php/kint": ">=3.0"
     },

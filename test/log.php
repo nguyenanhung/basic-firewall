@@ -18,4 +18,4 @@ $logging->write(
     array('hungna', 'hungng')
 );
 
-
+d(directory_map(__DIR__ . '/../tmp'));

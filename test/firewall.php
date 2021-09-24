@@ -10,6 +10,7 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use nguyenanhung\PhpBasicFirewall\FirewallIP;
+use nguyenanhung\Libraries\Filesystem\Filesystem;
 
 // ==================================== Setup List IP Whitelist
 // Setup constants HUNGNG_IP_WHITELIST
@@ -25,22 +26,29 @@ $whiteList = array(
 
 // ==================================== Setup List IP Blacklist
 // Setup constants HUNGNG_IP_BLACKLIST
-defined('HUNGNG_IP_BLACKLIST') or define('HUNGNG_IP_BLACKLIST', array(
-    //'192.168.0.*',
+defined('HUNGNG_IP_BLACKLIST') or define('HUNGNG_IP_BLACKLIST', array(//'192.168.0.*',
 ));
 // Or Blacklist Array
-$blackList = array(
-    //'192.168.0.50',
+$blackList = array(//'192.168.0.50',
 );
 
 // ==================================== Start Firewall
+
+// Create Unique File Log
+$randomLogFile = __DIR__ . '/../tmp/' . randomNanoId() . '.log';
+$file          = new Filesystem();
+$file->fileCreate($randomLogFile);
+
 $firewall = new FirewallIP();
-$firewall->setLogDestination(__DIR__ . '/../tmp/FirewallLog.log')
+$firewall->setLogDestination($randomLogFile)
          ->setIpWhiteList($whiteList)
          ->setIpBlackList($blackList)
          ->checkUserConnect(false);
 
 if (true !== $firewall->isAccess()) {
     $firewall->writeErrorLog($firewall->errorLogMessage()); // Write log to /tmp/FirewallLog.log
+    d(directory_map(__DIR__ . '/../tmp'));
+    d(file_get_contents($randomLogFile));
     $firewall->accessDeniedResponse(); // Response 403 http code, Access Denied message
 }
+
