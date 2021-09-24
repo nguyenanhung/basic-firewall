@@ -158,7 +158,8 @@ class FirewallIP
         );
         foreach ($IPKeys as $key) {
             if (array_key_exists($key, $_SERVER) === true) {
-                foreach (explode(',', $_SERVER[$key]) as $ip) {
+                $ips = explode(',', $_SERVER[$key]);
+                foreach ($ips as $ip) {
                     $ip = trim($ip);
                     if ($convertToInteger === true) {
                         return ip2long($ip);
