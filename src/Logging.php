@@ -10,6 +10,7 @@
 
 namespace nguyenanhung\PhpBasicFirewall;
 
+use Exception;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
@@ -24,21 +25,21 @@ use Monolog\Handler\StreamHandler;
  */
 class Logging
 {
-    protected $logPath = '';
+    protected $logDestination = '';
 
     /**
-     * Function setLogPath
+     * Function setLogDestination
      *
-     * @param $logPath
+     * @param $logDestination
      *
      * @return $this
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 09/21/2021 34:09
+     * @time     : 09/24/2021 57:40
      */
-    public function setLogPath($logPath): Logging
+    public function setLogDestination($logDestination): Logging
     {
-        $this->logPath = $logPath;
+        $this->logDestination = $logDestination;
 
         return $this;
     }
@@ -49,15 +50,24 @@ class Logging
      * @param string $message
      * @param array  $context
      *
-     * @throws \Exception
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 09/24/2021 22:27
+     * @time     : 09/24/2021 23:18
      */
     public function write(string $message = '', array $context = array())
     {
-        $log = new Logger('firewall');
-        $log->pushHandler(new StreamHandler($this->logPath . '/basic-firewall.log', Logger::WARNING));
-        $log->error($message, $context);
+        if (file_exists($this->logDestination)) {
+            try {
+                $log = new Logger('firewall');
+                $log->pushHandler(new StreamHandler($this->logDestination, Logger::WARNING));
+                $log->warning($message, $context);
+            } catch (Exception $exception) {
+                if (!empty($this->logDestination)) {
+                    @error_log($exception->getMessage() . PHP_EOL, 3, $this->logDestination);
+                } else {
+                    @error_log($exception->getMessage() . PHP_EOL, 3);
+                }
+            }
+        }
     }
 }

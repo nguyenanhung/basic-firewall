@@ -19,7 +19,7 @@ use M6Web\Component\Firewall\Firewall;
  */
 class FirewallIP
 {
-    /** @var string $logDestination */
+    /** @var string $logDestination Log File */
     protected $logDestination;
 
     /**
@@ -179,34 +179,26 @@ class FirewallIP
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 2019-01-10 16:29
      *
-     * @return string
+     * @return array
      */
-    public function errorLogMessage(): string
+    public function errorLogMessage(): array
     {
-        $message = date('Y-m-d H:i:s') . ' | Access Denied -> IP: ' . $this->getIPAddress();
-        if (isset($_SERVER['HTTP_CF_IPCOUNTRY'])) {
-            $message .= " - COUNTRY: " . $_SERVER['HTTP_CF_IPCOUNTRY'];
-        }
-        if (isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
-            $message .= " - PROTOCOL: " . $_SERVER['HTTP_X_FORWARDED_PROTO'];
-        }
-        if (isset($_SERVER['REQUEST_METHOD'])) {
-            $message .= " - METHOD: " . $_SERVER['REQUEST_METHOD'];
-        }
-        if (isset($_SERVER['HTTP_HOST'])) {
-            $message .= " - HOST: " . $_SERVER['HTTP_HOST'];
-        }
-        if (isset($_SERVER['REQUEST_URI'])) {
-            $message .= " - URI: " . $_SERVER['REQUEST_URI'];
-        }
-        if (isset($_SERVER['QUERY_STRING'])) {
-            $message .= " - QUERY_STRING: " . $_SERVER['QUERY_STRING'];
-        }
-        if (isset($_SERVER['HTTP_USER_AGENT'])) {
-            $message .= " - USER_AGENT: " . $_SERVER['HTTP_USER_AGENT'];
-        }
+        $context = array(
+            'IP'           => $this->getIPAddress(),
+            'COUNTRY'      => $_SERVER['HTTP_CF_IPCOUNTRY'] ?? '',
+            'PROTOCOL'     => $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '',
+            'METHOD'       => $_SERVER['REQUEST_METHOD'] ?? '',
+            'HOST'         => $_SERVER['HTTP_HOST'] ?? '',
+            'URI'          => $_SERVER['REQUEST_URI'] ?? '',
+            'QUERY_STRING' => $_SERVER['QUERY_STRING'] ?? '',
+            'USER_AGENT'   => $_SERVER['HTTP_USER_AGENT'] ?? '',
+        );
+        $message = $this->getIPAddress() . ' -> Access Denied!';
 
-        return $message;
+        return array(
+            'message' => $message,
+            'context' => $context
+        );
     }
 
     /**
@@ -238,19 +230,16 @@ class FirewallIP
     /**
      * Function writeErrorLog
      *
-     * @param string $message
+     * @param array $data
      *
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 09/01/2021 53:24
+     * @time     : 09/24/2021 13:31
      */
-    public function writeErrorLog(string $message = '')
+    public function writeErrorLog(array $data = array())
     {
-        if (!empty($this->logDestination)) {
-            @error_log($message . PHP_EOL, 3, $this->logDestination);
-        } else {
-            @error_log($message . PHP_EOL, 3);
-        }
+        $log = new Logging();
+        $log->setLogDestination($this->logDestination)->write($data['message'], $data['context']);
     }
 
     /**

@@ -48,7 +48,6 @@ if (!function_exists('php_basic_firewall')) {
         if (true !== $firewall->isAccess()) {
             $firewall->accessDeniedResponse();
         }
-
     }
 }
 if (!function_exists('php_basic_firewall_save_log')) {
@@ -65,12 +64,10 @@ if (!function_exists('php_basic_firewall_save_log')) {
     function php_basic_firewall_save_log(string $logFile = '', bool $defaultState = false)
     {
         $firewall = new nguyenanhung\PhpBasicFirewall\FirewallIP();
-        $firewall->setLogDestination($logFile)
-                 ->checkUserConnect($defaultState);
+        $firewall->setLogDestination($logFile)->checkUserConnect($defaultState);
         if (true !== $firewall->isAccess()) {
             $firewall->writeErrorLog($firewall->errorLogMessage());
             $firewall->accessDeniedResponse();
         }
-
     }
 }
