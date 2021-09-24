@@ -19,10 +19,10 @@
     "require": {
         "php": ">=5.4",
         "ext-pdo": "*",
-        "m6web/firewall": "^1.0"
+        "m6web/firewall": ">=1.0"
     },
     "require-dev": {
-        "monolog/monolog": "^1.26",
+        "monolog/monolog": ">=1.26",
         "kint-php/kint": ">=3.0"
     },
     "autoload": {
