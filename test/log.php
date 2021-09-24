@@ -10,9 +10,14 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use nguyenanhung\PhpBasicFirewall\Logging;
+use nguyenanhung\Libraries\Filesystem\Filesystem;
+
+$randomLogFile = __DIR__ . '/../tmp/' . randomNanoId() . '.log';
+$file          = new Filesystem();
+$file->fileCreate($randomLogFile);
 
 $logging = new Logging();
-$logging->setLogDestination(__DIR__ . '/../tmp/test-log.log');
+$logging->setLogDestination($randomLogFile);
 $logging->write(
     'Test Message',
     array('hungna', 'hungng')
