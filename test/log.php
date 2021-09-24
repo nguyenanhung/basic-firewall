@@ -20,7 +20,21 @@ $logging = new Logging();
 $logging->setLogDestination($randomLogFile);
 $logging->write(
     'Test Message',
-    array('hungna', 'hungng')
+    array(
+        randomNanoId(),
+        randomNanoId(),
+        randomNanoId(),
+        randomNanoId(),
+        randomNanoId(),
+        randomNanoId(),
+        randomNanoId(),
+        randomNanoId(),
+        randomNanoId(),
+        randomNanoId(),
+        randomNanoId(),
+        randomNanoId()
+    )
 );
 
 d(directory_map(__DIR__ . '/../tmp'));
+d(file_get_contents($randomLogFile));
