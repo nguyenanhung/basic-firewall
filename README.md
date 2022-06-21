@@ -92,14 +92,14 @@ Trong ví dụ trên, chỉ những IP bắt đầu bằng *192.168.0* (loại t
 
 Firewall hỗ trợ input các IP whitelist và blacklist như sau
 
-Type | Syntax | Details
---- | --- | ---
-IPV6|`::1`|Hỗ trợ các viết tắt
-IPV4|`192.168.0.1`|
-Range|`192.168.0.0-192.168.1.60`|Bao gồm tất cả các IP từ `192.168.0.0` đến `192.168.0.255`<br />và từ `192.168.1.0` đến `198.168.1.60`
-Wild card|`192.168.0.*`|Tất cả IP bắt đầu bằng `192.168.0`<br />Nó tương tự với cách khai báo `192.168.0.0-192.168.0.255`
-Subnet mask|`192.168.0.0/255.255.255.0`|Tất cả IP bắt đầu bằng `192.168.0`<br />Nó tương tự với cách khai báo `192.168.0.0-192.168.0.255` <br />và `192.168.0.*`
-CIDR Mask|`192.168.0.0/24`|Tất cả IP bắt đầu bằng `192.168.0`<br />Nó tương tự với cách khai báo `192.168.0.0-192.168.0.255` <br /> và `192.168.0.*` cũng như `192.168.0.0/255.255.255.0`
+| Type        | Syntax                      | Details                                                                                                                                                        |
+|-------------|-----------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| IPV6        | `::1`                       | Hỗ trợ các viết tắt                                                                                                                                            |
+| IPV4        | `192.168.0.1`               |                                                                                                                                                                |
+| Range       | `192.168.0.0-192.168.1.60`  | Bao gồm tất cả các IP từ `192.168.0.0` đến `192.168.0.255`<br />và từ `192.168.1.0` đến `198.168.1.60`                                                         |
+| Wild card   | `192.168.0.*`               | Tất cả IP bắt đầu bằng `192.168.0`<br />Nó tương tự với cách khai báo `192.168.0.0-192.168.0.255`                                                              |
+| Subnet mask | `192.168.0.0/255.255.255.0` | Tất cả IP bắt đầu bằng `192.168.0`<br />Nó tương tự với cách khai báo `192.168.0.0-192.168.0.255` <br />và `192.168.0.*`                                       |
+| CIDR Mask   | `192.168.0.0/24`            | Tất cả IP bắt đầu bằng `192.168.0`<br />Nó tương tự với cách khai báo `192.168.0.0-192.168.0.255` <br /> và `192.168.0.*` cũng như `192.168.0.0/255.255.255.0` |
 
 ### Hướng dẫn tích hợp hàm tiện ích Check System
 
@@ -155,7 +155,7 @@ Gói có sử dụng packages `m6web/firewall` được cung cấp bởi `M6Web`
 Nếu có bất kì câu hỏi hoặc cần hỗ trợ nào, liên hệ theo thông tin sau
 
 | Name        | Email                | Skype            | Facebook      |
-| ----------- | -------------------- | ---------------- | ------------- |
+|-------------|----------------------|------------------|---------------|
 | Hung Nguyen | dev@nguyenanhung.com | nguyenanhung5891 | @nguyenanhung |
 
 From Vietnam with Love ❤️

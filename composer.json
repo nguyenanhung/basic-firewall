@@ -19,7 +19,7 @@
     "require": {
         "php": ">=7.0",
         "ext-pdo": "*",
-        "m6web/firewall": ">=1.0"
+        "tramtro/m6web-firewall": ">=1.0"
     },
     "require-dev": {
         "nguyenanhung/filesystem-helper": "^2.0",
