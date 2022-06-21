@@ -19,7 +19,7 @@
     "require": {
         "php": ">=5.4",
         "ext-pdo": "*",
-        "m6web/firewall": ">=1.0"
+        "tramtro/m6web-firewall": ">=1.0"
     },
     "require-dev": {
         "monolog/monolog": ">=1.26",

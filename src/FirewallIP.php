@@ -8,7 +8,7 @@
 
 namespace nguyenanhung\PhpBasicFirewall;
 
-use M6Web\Component\Firewall\Firewall;
+use nguyenanhung\Component\Firewall\Firewall;
 
 /**
  * Class FirewallIP - Hàm hỗ trợ filter IP được phép truy cập vào hệ thống
