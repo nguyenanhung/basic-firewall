@@ -80,15 +80,15 @@ class CheckSystem
     public function checkPhpVersion(): array
     {
         $minVersion = $this->phpMinVersion;
-        $operator   = '>=';
+        $operator = '>=';
 
         $message = 'Current PHP Version: ' . PHP_VERSION . ' - Suggest PHP Version ' . $operator . ' ' . $minVersion;
 
         if (version_compare(PHP_VERSION, $minVersion, $operator)) {
-            $code   = true;
+            $code = true;
             $status = 'OK';
         } else {
-            $code   = false;
+            $code = false;
             $status = 'NOK';
         }
 
@@ -125,7 +125,7 @@ class CheckSystem
      */
     public function connectUsePhpTelnet(string $hostname = '', $port = ''): array
     {
-        $message = 'Connection to server ' . $hostname . ':' . $port . '';
+        $message = 'Connection to server ' . $hostname . ':' . $port;
         try {
             $socket = fsockopen($hostname, $port);
             if ($socket) {
@@ -178,7 +178,7 @@ class CheckSystem
     public function checkExtensionRequirement(string $extension = ''): array
     {
         $message = 'Requirement Extension: ' . $extension;
-        $code    = extension_loaded($extension);
+        $code = extension_loaded($extension);
 
         return array(
             'code'    => $code,
@@ -218,25 +218,25 @@ class CheckSystem
     {
         $message = 'File ' . $filename;
         if (!file_exists($filename)) {
-            $code   = false;
+            $code = false;
             $status = 'File ' . $filename . ' not exists';
         } else {
-            $mode = strtolower($mode);
+            $mode = mb_strtolower($mode);
             switch ($mode) {
                 case "read":
-                    $code   = is_readable($filename);
+                    $code = is_readable($filename);
                     $status = $code === true ? 'Read OK' : 'Read NOK';
                     break;
                 case "write":
-                    $code   = is_writable($filename);
+                    $code = is_writable($filename);
                     $status = $code === true ? 'Write OK' : 'Write NOK';
                     break;
                 case "executable":
-                    $code   = is_executable($filename);
+                    $code = is_executable($filename);
                     $status = $code === true ? 'Executable OK' : 'Executable NOK';
                     break;
                 default:
-                    $code   = false;
+                    $code = false;
                     $status = 'NOK';
             }
         }
@@ -311,14 +311,14 @@ class CheckSystem
     {
         try {
             $dsnString = "mysql:host=$host;port=$port;dbname=$database";
-            $conn      = new PDO($dsnString, $username, $password);
+            $conn = new PDO($dsnString, $username, $password);
             // set the PDO error mode to exception
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $result = array(
                 'code'    => true,
                 'message' => "Connected successfully to Database : " . $dsnString . " with username: " . $username . " and your input password"
             );
-            $conn   = null;
+            $conn = null;
         } catch (PDOException $e) {
             $result = array(
                 'code'    => false,

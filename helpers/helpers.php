@@ -22,13 +22,13 @@ if (!function_exists('register_error_handler')) {
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/24/2021 26:08
      */
-    function register_error_handler($errno, $errstr, $errfile, $errline): bool
+    function register_error_handler($errno, $errstr, $errfile, $errline)
     {
         if (($errno & error_reporting()) > 0) {
             throw new ErrorException($errstr, 500, $errno, $errfile, $errline);
-        } else {
-            return false;
         }
+
+        return false;
     }
 }
 if (!function_exists('php_basic_firewall')) {
