@@ -316,15 +316,19 @@ class CheckSystem
 	 */
 	public function checkConnectDatabaseWithPDO(string $host = '', $port = '', string $database = '', string $username = '', string $password = ''): array
 	{
+		$dsnString = "mysql:host=$host;port=$port;dbname=$database";
 		try {
-			$dsnString = "mysql:host=$host;port=$port;dbname=$database";
 			$conn = new PDO($dsnString, $username, $password);
 			// set the PDO error mode to exception
 			$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			$result = array(
 				'code' => true,
 				'status' => 'OK',
-				'message' => "Connected successfully to Database : " . $dsnString . " with username: " . $username . " and your input password"
+				'message' => "Connected successfully to Database : " . $dsnString . " with username: " . $username . " and your input password",
+				'data' => array(
+					'dsnString' => $dsnString,
+					'message' => "Connected successfully to Database : {{PDO_DSN_STRING}} with username: {{PDO_USERNAME}} and your input password"
+				)
 			);
 			$conn = null;
 		} catch (PDOException $e) {
@@ -332,7 +336,11 @@ class CheckSystem
 				'code' => false,
 				'status' => 'NOK',
 				'message' => "Connection failed: " . $e->getMessage(),
-				'error' => $e->getTraceAsString()
+				'error' => $e->getTraceAsString(),
+				'data' => array(
+					'dsnString' => $dsnString,
+					'message' => "Connected successfully to Database : {{PDO_DSN_STRING}} with username: {{PDO_USERNAME}} and your input password"
+				)
 			);
 		}
 
