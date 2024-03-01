@@ -327,7 +327,9 @@ class CheckSystem
 				'message' => "Connected successfully to Database : " . $dsnString . " with username: " . $username . " and your input password",
 				'data' => array(
 					'dsnString' => $dsnString,
-					'message' => "Connected successfully to Database : {{PDO_DSN_STRING}} with username: {{PDO_USERNAME}} and your input password"
+					'username' => $username,
+					'status' => 'Connected successfully',
+					'message' => "{{PDO_CONNECT_STATUS}} to Database : {{PDO_DSN_STRING}} with username: {{PDO_USERNAME}} and your input password"
 				)
 			);
 			$conn = null;
@@ -339,7 +341,9 @@ class CheckSystem
 				'error' => $e->getTraceAsString(),
 				'data' => array(
 					'dsnString' => $dsnString,
-					'message' => "Connected successfully to Database : {{PDO_DSN_STRING}} with username: {{PDO_USERNAME}} and your input password"
+					'username' => $username,
+					'status' => 'Connected failed',
+					'message' => "{{PDO_CONNECT_STATUS}} to Database : {{PDO_DSN_STRING}} with username: {{PDO_USERNAME}} and your input password"
 				)
 			);
 		}
