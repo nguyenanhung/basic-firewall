@@ -25,49 +25,49 @@ use Monolog\Handler\StreamHandler;
  */
 class Logging
 {
-    protected $logDestination = '';
+	protected $logDestination = '';
 
-    /**
-     * Function setLogDestination
-     *
-     * @param $logDestination
-     *
-     * @return $this
-     * @author   : 713uk13m <dev@nguyenanhung.com>
-     * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 09/24/2021 57:40
-     */
-    public function setLogDestination($logDestination): Logging
-    {
-        $this->logDestination = $logDestination;
+	/**
+	 * Function setLogDestination
+	 *
+	 * @param $logDestination
+	 *
+	 * @return $this
+	 * @author   : 713uk13m <dev@nguyenanhung.com>
+	 * @copyright: 713uk13m <dev@nguyenanhung.com>
+	 * @time     : 09/24/2021 57:40
+	 */
+	public function setLogDestination($logDestination): Logging
+	{
+		$this->logDestination = $logDestination;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Function write
-     *
-     * @param string $message
-     * @param array  $context
-     *
-     * @author   : 713uk13m <dev@nguyenanhung.com>
-     * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 09/24/2021 23:18
-     */
-    public function write(string $message = '', array $context = array())
-    {
-        if (file_exists($this->logDestination)) {
-            try {
-                $log = new Logger('firewall');
-                $log->pushHandler(new StreamHandler($this->logDestination, Logger::WARNING));
-                $log->warning($message, $context);
-            } catch (Exception $exception) {
-                if (!empty($this->logDestination)) {
-                    @error_log($exception->getMessage() . PHP_EOL, 3, $this->logDestination);
-                } else {
-                    @error_log($exception->getMessage() . PHP_EOL, 3);
-                }
-            }
-        }
-    }
+	/**
+	 * Function write
+	 *
+	 * @param string $message
+	 * @param array $context
+	 *
+	 * @author   : 713uk13m <dev@nguyenanhung.com>
+	 * @copyright: 713uk13m <dev@nguyenanhung.com>
+	 * @time     : 09/24/2021 23:18
+	 */
+	public function write(string $message = '', array $context = array())
+	{
+		if (file_exists($this->logDestination)) {
+			try {
+				$log = new Logger('firewall');
+				$log->pushHandler(new StreamHandler($this->logDestination, Logger::WARNING));
+				$log->warning($message, $context);
+			} catch (Exception $exception) {
+				if (!empty($this->logDestination)) {
+					@error_log($exception->getMessage() . PHP_EOL, 3, $this->logDestination);
+				} else {
+					@error_log($exception->getMessage() . PHP_EOL, 3);
+				}
+			}
+		}
+	}
 }
