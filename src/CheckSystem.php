@@ -183,6 +183,7 @@ class CheckSystem
 
         return array(
             'code' => $code,
+            'name' => $extension,
             'message' => $message,
             'status' => $code === true ? 'OK' : 'NOK'
         );
@@ -215,11 +216,12 @@ class CheckSystem
      */
     public function checkFunctionsRequirement(string $function_name = ''): array
     {
-        $message = 'Requirement Extension: ' . $function_name;
+        $message = 'Requirement Functions: ' . $function_name;
         $code = function_exists($function_name);
 
         return array(
             'code' => $code,
+            'name' => $function_name,
             'message' => $message,
             'status' => $code === true ? 'OK' : 'NOK'
         );
@@ -288,6 +290,8 @@ class CheckSystem
             'message' => $message,
             'status' => $status,
             'checkStatus' => $checkStatus,
+            'filename' => $filename,
+            'mode' => $mode
         );
     }
 
