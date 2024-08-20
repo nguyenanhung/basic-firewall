@@ -19,21 +19,21 @@ namespace nguyenanhung\PhpBasicFirewall;
  */
 class Output
 {
-	/**
-	 * Function writeLn
-	 *
-	 * @param        $message
-	 * @param string $newLine
-	 *
-	 * @author   : 713uk13m <dev@nguyenanhung.com>
-	 * @copyright: 713uk13m <dev@nguyenanhung.com>
-	 * @time     : 09/02/2021 42:50
-	 */
-	public static function writeLn($message, string $newLine = "\n")
-	{
-		if (function_exists('json_encode') && (is_array($message) || is_object($message))) {
-			$message = json_encode($message);
-		}
-		echo $message . $newLine;
-	}
+    /**
+     * Function writeLn
+     *
+     * @param        $message
+     * @param string $newLine
+     *
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 09/02/2021 42:50
+     */
+    public static function writeLn($message, string $newLine = "\n")
+    {
+        if (function_exists('json_encode') && (is_array($message) || is_object($message))) {
+            $message = json_encode($message);
+        }
+        echo $message . $newLine;
+    }
 }
