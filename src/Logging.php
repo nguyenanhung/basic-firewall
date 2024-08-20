@@ -47,7 +47,7 @@ class Logging
      * Function write
      *
      * @param string $message
-     * @param array  $context
+     * @param array $context
      *
      * @throws \Exception
      * @author   : 713uk13m <dev@nguyenanhung.com>

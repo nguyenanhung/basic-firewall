@@ -135,12 +135,12 @@ class FirewallIP
     /**
      * Function getIPAddress
      *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 2019-01-10 16:24
-     *
      * @param bool $convertToInteger
      *
      * @return bool|int|string
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 2019-01-10 16:24
+     *
      */
     public function getIPAddress($convertToInteger = false)
     {
@@ -175,10 +175,10 @@ class FirewallIP
     /**
      * Function errorLogMessage
      *
+     * @return string
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 2019-01-10 16:29
      *
-     * @return string
      */
     public function errorLogMessage()
     {
@@ -211,10 +211,10 @@ class FirewallIP
     /**
      * Function accessDenied
      *
+     * @return string
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 2019-01-10 16:29
      *
-     * @return string
      */
     public function accessDenied()
     {

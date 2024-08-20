@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Project basic-firewall
  * Created by PhpStorm
@@ -9,7 +10,7 @@
  */
 if (!function_exists('register_error_handler')) {
     /**
-     * @throws \ErrorException
+     * @throws ErrorException
      */
     function register_error_handler($errno, $errstr, $errfile, $errline)
     {
@@ -37,7 +38,6 @@ if (!function_exists('php_basic_firewall')) {
         if (true !== $firewall->isAccess()) {
             $firewall->accessDeniedResponse();
         }
-
     }
 }
 if (!function_exists('php_basic_firewall_save_log')) {
@@ -45,7 +45,7 @@ if (!function_exists('php_basic_firewall_save_log')) {
      * Function php_basic_firewall_save_log
      *
      * @param string $logFile
-     * @param bool   $defaultState
+     * @param bool $defaultState
      *
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
@@ -59,6 +59,5 @@ if (!function_exists('php_basic_firewall_save_log')) {
             $firewall->writeErrorLog($firewall->errorLogMessage());
             $firewall->accessDeniedResponse();
         }
-
     }
 }
