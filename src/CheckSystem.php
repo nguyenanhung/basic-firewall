@@ -81,7 +81,7 @@ class CheckSystem
     {
         $minVersion = $this->phpMinVersion;
         $operator = '>=';
-
+        $message_pattern = 'Current PHP Version: {{current_version}} - Suggest PHP Version {{operator}} {{min_version}}';
         $message = 'Current PHP Version: ' . PHP_VERSION . ' - Suggest PHP Version ' . $operator . ' ' . $minVersion;
 
         if (version_compare(PHP_VERSION, $minVersion, $operator)) {
@@ -95,7 +95,11 @@ class CheckSystem
         return array(
             'code' => $code,
             'message' => $message,
+            'message_pattern' => $message_pattern,
             'status' => $status,
+            'current_version' => PHP_VERSION,
+            'min_version' => $minVersion,
+            'operator' => $operator,
         );
     }
 
@@ -134,12 +138,16 @@ class CheckSystem
                 $code = false;
             }
             $result = array(
+                'hostname' => $hostname,
+                'port' => $port,
                 'code' => $code,
                 'message' => $message,
                 'status' => $code === true ? 'OK' : 'NOK'
             );
         } catch (Exception $exception) {
             $result = array(
+                'hostname' => $hostname,
+                'port' => $port,
                 'code' => false,
                 'message' => $message,
                 'status' => 'NOK',
