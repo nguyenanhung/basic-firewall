@@ -57,7 +57,7 @@ class FirewallIP
      */
     public function blacklistDatabaseIps()
     {
-        return file(__DIR__ . '/config/latest_blacklist_plaintext.txt');
+        return file(__DIR__ . '/config/latest_blacklist_plaintext.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
     }
 
     /**
@@ -69,7 +69,7 @@ class FirewallIP
      */
     public function uptimeRobotDatabaseIps()
     {
-        return file(__DIR__ . '/config/uptime_robot.txt');
+        return file(__DIR__ . '/config/uptime_robot.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
     }
 
     /**

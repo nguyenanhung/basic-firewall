@@ -7,7 +7,7 @@ class Blacklisted
     public function check()
     {
         $IP = getIpAddress();
-        $arr = file(__DIR__ . '/config/latest_blacklist.txt');
+        $arr = file(__DIR__ . '/config/latest_blacklist.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
         if ($arr && !empty($IP)) {
             foreach ($arr as $k => $v) {
                 $deny = "deny from " . $IP;
