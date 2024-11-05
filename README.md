@@ -1,12 +1,17 @@
-[![Latest Stable Version](http://poser.pugx.org/nguyenanhung/basic-firewall/v)](https://packagist.org/packages/nguyenanhung/basic-firewall) [![Total Downloads](http://poser.pugx.org/nguyenanhung/basic-firewall/downloads)](https://packagist.org/packages/nguyenanhung/basic-firewall) [![Latest Unstable Version](http://poser.pugx.org/nguyenanhung/basic-firewall/v/unstable)](https://packagist.org/packages/nguyenanhung/basic-firewall) [![License](http://poser.pugx.org/nguyenanhung/basic-firewall/license)](https://packagist.org/packages/nguyenanhung/basic-firewall) [![PHP Version Require](http://poser.pugx.org/nguyenanhung/basic-firewall/require/php)](https://packagist.org/packages/nguyenanhung/basic-firewall)
+[![Latest Stable Version](https://img.shields.io/packagist/v/nguyenanhung/basic-firewall.svg?style=flat-square)](https://packagist.org/packages/nguyenanhung/basic-firewall)
+[![Total Downloads](https://img.shields.io/packagist/dt/nguyenanhung/basic-firewall.svg?style=flat-square)](https://packagist.org/packages/nguyenanhung/basic-firewall)
+[![Daily Downloads](https://img.shields.io/packagist/dd/nguyenanhung/basic-firewall.svg?style=flat-square)](https://packagist.org/packages/nguyenanhung/basic-firewall)
+[![Monthly Downloads](https://img.shields.io/packagist/dm/nguyenanhung/basic-firewall.svg?style=flat-square)](https://packagist.org/packages/nguyenanhung/basic-firewall)
+[![License](https://img.shields.io/packagist/l/nguyenanhung/basic-firewall.svg?style=flat-square)](https://packagist.org/packages/nguyenanhung/basic-firewall)
+[![PHP Version Require](https://img.shields.io/packagist/dependency-v/nguyenanhung/basic-firewall/php)](https://packagist.org/packages/nguyenanhung/basic-firewall)
 
 # PHP Basic Firewall
 
 Thư viện `PHP Basic Firewall` được xây dựng bằng PHP cung cấp 1 phương thức đơn giản để hạn chế quyền truy cập website /
 api / webservice dựa vào địa chỉ `IP` truy cập của người dùng.
 
-Thông thường Firewall tốt nhất nên được thiết đặt từ tầng hệ thống: hệ điều hành có cài tường lửa như `iptables`
-, `firewalld` hay `CSF`.
+Thông thường Firewall tốt nhất nên được thiết đặt từ tầng hệ thống: hệ điều hành có cài tường lửa
+như `iptables`, `firewalld` hay `CSF`.
 
 Tuy nhiên, trong 1 số trường hợp DEV không có quyền can thiệp hệ thống hoặc không nắm chắc. Hoặc giả như muốn chủ động
 trong các tình huống thì có thể tích hợp gói `PHP Basic Firewall` này vào để thực hiện từ tầng Application.
