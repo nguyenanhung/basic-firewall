@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Project basic-firewall
  * Created by PhpStorm
@@ -9,10 +10,12 @@
  */
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use nguyenanhung\PhpBasicFirewall\FirewallIP;
 use nguyenanhung\Libraries\Filesystem\Filesystem;
+use nguyenanhung\PhpBasicFirewall\FirewallIP;
 
 // ==================================== Setup List IP Whitelist
+defined('BLACKLIST_WITH_DATABASE_IPS') or define('BLACKLIST_WITH_DATABASE_IPS', true);
+defined('WHITELIST_UPTIME_ROBOT_WHITELIST') or define('WHITELIST_UPTIME_ROBOT_WHITELIST', true);
 // Setup constants HUNGNG_IP_WHITELIST
 defined('HUNGNG_IP_WHITELIST') or define('HUNGNG_IP_WHITELIST', array(
     '127.0.0.1',
@@ -36,14 +39,14 @@ $blackList = array(//'192.168.0.50',
 
 // Create Unique File Log
 $randomLogFile = __DIR__ . '/../tmp/' . randomNanoId() . '.log';
-$file          = new Filesystem();
+$file = new Filesystem();
 $file->fileCreate($randomLogFile);
 
 $firewall = new FirewallIP();
 $firewall->setLogDestination($randomLogFile)
-         ->setIpWhiteList($whiteList)
-         ->setIpBlackList($blackList)
-         ->checkUserConnect(false);
+    ->setIpWhiteList($whiteList)
+    ->setIpBlackList($blackList)
+    ->checkUserConnect(false);
 
 if (true !== $firewall->isAccess()) {
     $firewall->writeErrorLog($firewall->errorLogMessage()); // Write log to /tmp/FirewallLog.log
