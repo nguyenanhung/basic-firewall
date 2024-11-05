@@ -12,6 +12,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use nguyenanhung\PhpBasicFirewall\FirewallIP;
 
 // ==================================== Setup List IP Whitelist
+defined('BLACKLIST_WITH_DATABASE_IPS') or define('BLACKLIST_WITH_DATABASE_IPS', true);
+defined('WHITELIST_UPTIME_ROBOT_WHITELIST') or define('WHITELIST_UPTIME_ROBOT_WHITELIST', true);
 // Setup constants HUNGNG_IP_WHITELIST
 defined('HUNGNG_IP_WHITELIST') or define('HUNGNG_IP_WHITELIST', array(
     '127.0.0.1',
