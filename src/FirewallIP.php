@@ -28,6 +28,16 @@ class FirewallIP
     protected $ipWhiteList = array('127.0.0.1');
 
     /**
+     * @var bool Whitelisted Uptime Robot IP Address
+     */
+    protected $whitelistUptimeRobot = false;
+
+    /**
+     * @var array Uptime Robot IP Address Database
+     */
+    protected $whitelistUptimeData = array();
+
+    /**
      * @var array Cấu hình các IP không được phép truy cập vào hệ thống
      */
     protected $ipBlacklist = array();
@@ -37,6 +47,45 @@ class FirewallIP
 
     /** @var bool Bypass if Use CLI */
     protected $cliBypass = false;
+
+    /**
+     * Function blacklistDatabaseIps
+     *
+     * User: 713uk13m <dev@nguyenanhung.com>
+     * Copyright: 713uk13m <dev@nguyenanhung.com>
+     * @return array|false
+     */
+    public function blacklistDatabaseIps()
+    {
+        return file(__DIR__ . '/config/latest_blacklist_plaintext.txt');
+    }
+
+    /**
+     * Function uptimeRobotDatabaseIps
+     *
+     * User: 713uk13m <dev@nguyenanhung.com>
+     * Copyright: 713uk13m <dev@nguyenanhung.com>
+     * @return array|false
+     */
+    public function uptimeRobotDatabaseIps()
+    {
+        return file(__DIR__ . '/config/uptime_robot.txt');
+    }
+
+    /**
+     * Function whitelistUptimeRobot
+     *
+     * @param bool $whitelistUptimeRobot
+     * User: 713uk13m <dev@nguyenanhung.com>
+     * Copyright: 713uk13m <dev@nguyenanhung.com>
+     * @return $this
+     */
+    public function whitelistUptimeRobot(bool $whitelistUptimeRobot = true): FirewallIP
+    {
+        $this->whitelistUptimeRobot = $whitelistUptimeRobot;
+        $this->whitelistUptimeData = $this->uptimeRobotDatabaseIps();
+        return $this;
+    }
 
     /**
      * Function setCliBypass
@@ -261,10 +310,19 @@ class FirewallIP
         } elseif (!empty($this->ipWhiteList)) {
             $firewall->addList($this->ipWhiteList, 'local', true);
         }
+        if (
+            $this->whitelistUptimeRobot === true ||
+            (defined('WHITELIST_UPTIME_ROBOT_WHITELIST') && WHITELIST_UPTIME_ROBOT_WHITELIST === true)
+        ) {
+            $firewall->addList($this->uptimeRobotDatabaseIps(), 'local', true);
+        }
         if (defined('HUNGNG_IP_BLACKLIST') && is_array(HUNGNG_IP_BLACKLIST)) {
             $firewall->addList(HUNGNG_IP_BLACKLIST, 'localBad', false);
         } elseif (!empty($this->ipBlacklist)) {
             $firewall->addList($this->ipBlacklist, 'localBad', false);
+        }
+        if (defined('BLACKLIST_WITH_DATABASE_IPS') && BLACKLIST_WITH_DATABASE_IPS === true) {
+            $firewall->addList($this->blacklistDatabaseIps(), 'localBad', false);
         }
         $this->access = $firewall->setIpAddress($this->getIPAddress())->handle();
 
