@@ -125,3 +125,5 @@ composer.lock
 tmp/*
 !tmp/.htaccess
 !tmp/.gitkeep
+
+test.php

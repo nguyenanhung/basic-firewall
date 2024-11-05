@@ -10,6 +10,7 @@
 
 namespace nguyenanhung\PhpBasicFirewall;
 
+use Exception;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
@@ -49,7 +50,7 @@ class Logging
      * @param string $message
      * @param array $context
      *
-     * @throws \Exception
+     * @throws Exception
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/24/2021 24:20
