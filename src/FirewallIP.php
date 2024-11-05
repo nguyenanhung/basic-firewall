@@ -53,11 +53,12 @@ class FirewallIP
      *
      * User: 713uk13m <dev@nguyenanhung.com>
      * Copyright: 713uk13m <dev@nguyenanhung.com>
-     * @return array|false
+     * @return array
      */
-    public function blacklistDatabaseIps()
+    public function blacklistDatabaseIps(): array
     {
-        return file(__DIR__ . '/config/latest_blacklist_plaintext.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        $data = file(__DIR__ . '/config/latest_blacklist_plaintext.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        return array_map('trim', $data);
     }
 
     /**
@@ -65,11 +66,12 @@ class FirewallIP
      *
      * User: 713uk13m <dev@nguyenanhung.com>
      * Copyright: 713uk13m <dev@nguyenanhung.com>
-     * @return array|false
+     * @return array
      */
-    public function uptimeRobotDatabaseIps()
+    public function uptimeRobotDatabaseIps(): array
     {
-        return file(__DIR__ . '/config/uptime_robot.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        $data = file(__DIR__ . '/config/uptime_robot.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        return array_map('trim', $data);
     }
 
     /**
@@ -303,26 +305,30 @@ class FirewallIP
      */
     public function checkUserConnect(bool $defaultState = false): FirewallIP
     {
-        $firewall = new Firewall();
-        $firewall->setDefaultState($defaultState);
-        if (defined('HUNGNG_IP_WHITELIST') && is_array(HUNGNG_IP_WHITELIST)) {
-            $firewall->addList(HUNGNG_IP_WHITELIST, 'local', true);
-        } elseif (!empty($this->ipWhiteList)) {
-            $firewall->addList($this->ipWhiteList, 'local', true);
-        }
+        $addWhitelist = array();
+        $addBlacklist = array();
         if (
             $this->whitelistUptimeRobot === true ||
             (defined('WHITELIST_UPTIME_ROBOT_WHITELIST') && WHITELIST_UPTIME_ROBOT_WHITELIST === true)
         ) {
-            $firewall->addList($this->uptimeRobotDatabaseIps(), 'local', true);
-        }
-        if (defined('HUNGNG_IP_BLACKLIST') && is_array(HUNGNG_IP_BLACKLIST)) {
-            $firewall->addList(HUNGNG_IP_BLACKLIST, 'localBad', false);
-        } elseif (!empty($this->ipBlacklist)) {
-            $firewall->addList($this->ipBlacklist, 'localBad', false);
+            $addWhitelist = $this->uptimeRobotDatabaseIps();
         }
         if (defined('BLACKLIST_WITH_DATABASE_IPS') && BLACKLIST_WITH_DATABASE_IPS === true) {
-            $firewall->addList($this->blacklistDatabaseIps(), 'localBad', false);
+            $addBlacklist = $this->blacklistDatabaseIps();
+        }
+
+        $firewall = new Firewall();
+        $firewall->setDefaultState($defaultState);
+        if (defined('HUNGNG_IP_WHITELIST') && is_array(HUNGNG_IP_WHITELIST)) {
+            $firewall->addList(array_merge(HUNGNG_IP_WHITELIST, $addWhitelist), 'local', true);
+        } elseif (!empty($this->ipWhiteList)) {
+            $firewall->addList(array_merge($this->ipWhiteList, $addWhitelist), 'local', true);
+        }
+
+        if (defined('HUNGNG_IP_BLACKLIST') && is_array(HUNGNG_IP_BLACKLIST)) {
+            $firewall->addList(array_merge(HUNGNG_IP_BLACKLIST, $addBlacklist), 'localBad', false);
+        } elseif (!empty($this->ipBlacklist)) {
+            $firewall->addList(array_merge($this->ipBlacklist, $addBlacklist), 'localBad', false);
         }
         $this->access = $firewall->setIpAddress($this->getIPAddress())->handle();
 
